@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prodotti | Zia Paperona</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5efe6;
+    --warm-bg: #fdf8f2;
+    --brown-dark: #3b2212;
+    --brown-mid: #7a4a2a;
+    --brown-light: #c8956a;
+    --terracotta: #c0522a;
+    --gold: #c9a84c;
+    --gold-light: #e8d09a;
+    --text: #2e1a0e;
+    --text-soft: #6b4c35;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--warm-bg);
+    font-family: 'Lato', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--brown-dark);
+    padding: 28px 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .header-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .logo-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .logo-line .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.7;
+  }
+  .logo-emoji {
+    font-size: 2rem;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: var(--cream);
+    letter-spacing: 2px;
+    line-height: 1.1;
+  }
+  header h1 span {
+    color: var(--gold);
+  }
+  .header-sub {
+    color: var(--gold-light);
+    font-size: 0.82rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 300;
+  }
+  .header-tagline {
+    color: #c8a882;
+    font-size: 0.78rem;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ── FILTRI ── */
+  .filters {
+    background: var(--brown-dark);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 12px 16px 14px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold-light);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--gold);
+    color: var(--brown-dark);
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── GRIGLIA ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--brown-mid);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 28px 16px 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+  .section-title::before, .section-title::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--brown-light);
+    opacity: 0.5;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px 12px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(59,34,18,0.10);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(59,34,18,0.16);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    background: var(--cream);
+  }
+  .card-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #e8d9c8 0%, #d4b896 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+  }
+
+  .card-body {
+    padding: 10px 12px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.92rem;
+    color: var(--brown-dark);
+    line-height: 1.3;
+    font-weight: 700;
+    flex: 1;
+  }
+  .card-price {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    margin-top: 6px;
+  }
+  .card-badge {
+    font-size: 0.65rem;
+    color: var(--text-soft);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    opacity: 0.7;
+  }
+
+  /* ── CTA ORDINA ── */
+  .cta-bar {
+    position: sticky;
+    bottom: 0;
+    background: var(--brown-dark);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    box-shadow: 0 -4px 20px rgba(59,34,18,0.25);
+    z-index: 100;
+  }
+  .cta-bar p {
+    color: var(--gold-light);
+    font-size: 0.82rem;
+    font-style: italic;
+  }
+  .btn-ordina {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 6px;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+    box-shadow: 0 3px 12px rgba(192,82,42,0.35);
+  }
+  .btn-ordina:hover {
+    background: #a83d1c;
+    transform: scale(1.03);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown-dark);
+    padding: 20px 16px;
+    text-align: center;
+    color: #8a6a50;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+  footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* hidden for filter */
+  .card.hidden { display: none; }
+
+  @media (min-width: 600px) {
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 16px 20px 32px; }
+  }
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-line">
+      <div class="divider"></div>
+      <span class="logo-emoji">🦆</span>
+      <div class="divider"></div>
+    </div>
+    <h1>Zia <span>Paperona</span></h1>
+    <p class="header-sub">Prodotti Artigianali</p>
+    <p class="header-tagline">Specialità sarde e sapori autentici</p>
+  </div>
+</header>
+
+<div class="filters">
+  <button class="filter-btn active" data-cat="all">Tutti</button>
+  <button class="filter-btn" data-cat="carne">🥩 Carni</button>
+  <button class="filter-btn" data-cat="salumi">🍖 Salumi</button>
+  <button class="filter-btn" data-cat="formaggi">🧀 Formaggi</button>
+  <button class="filter-btn" data-cat="pane">🍞 Pane & Dolci</button>
+  <button class="filter-btn" data-cat="vini">🍷 Vini & Liquori</button>
+  <button class="filter-btn" data-cat="piatti">🍽 Piatti pronti</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- CARNI -->
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🥩</div>
+    <div class="card-body">
+      <div class="card-name">Arrosticini di agnellino impannati alla sarda</div>
+      <div class="card-price">12,45 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🍢</div>
+    <div class="card-body">
+      <div class="card-name">Arrosticini di Cavallo</div>
+      <div class="card-price">24,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🥩</div>
+    <div class="card-body">
+      <div class="card-name">Bistecche al kg</div>
+      <div class="card-price">21,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🍡</div>
+    <div class="card-body">
+      <div class="card-name">Bombette al kg</div>
+      <div class="card-price">21,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🥩</div>
+    <div class="card-body">
+      <div class="card-name">Costine di cavallo al kg</div>
+      <div class="card-price">18,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🍔</div>
+    <div class="card-body">
+      <div class="card-name">Hamburger di Cavallo al kg</div>
+      <div class="card-price">17,90 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🌀</div>
+    <div class="card-body">
+      <div class="card-name">Girelle di carne con mozzarella al kg</div>
+      <div class="card-price">19,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🥩</div>
+    <div class="card-body">
+      <div class="card-name">Pulled horse già cotta al kg sfilacciata</div>
+      <div class="card-price">21,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🥩</div>
+    <div class="card-body">
+      <div class="card-name">Straccetti di cavallo con carciofi al kg</div>
+      <div class="card-price">21,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="carne">
+    <div class="card-img-placeholder">🥩</div>
+    <div class="card-body">
+      <div class="card-name">Straccetti di cavallo o asino al kg</div>
+      <div class="card-price">22,00 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <!-- SALUMI -->
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🍖</div>
+    <div class="card-body">
+      <div class="card-name">Cacciatorini 4pz</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🥓</div>
+    <div class="card-body">
+      <div class="card-name">Lardo al mirto 400g</div>
+      <div class="card-price">7,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🍖</div>
+    <div class="card-body">
+      <div class="card-name">Lombo di percora 200g</div>
+      <div class="card-price">17,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🍖</div>
+    <div class="card-body">
+      <div class="card-name">Lonza di maiale 400g</div>
+      <div class="card-price">11,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🥓</div>
+    <div class="card-body">
+      <div class="card-name">Pancetta tesa 400g</div>
+      <div class="card-price">8,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🍖</div>
+    <div class="card-body">
+      <div class="card-name">Prosciutto di pecora 400g</div>
+      <div class="card-price">20,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salame di cavallo e asino al kg</div>
+      <div class="card-price">23,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salame di pecora 200g</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salsiccia ai semi d'anice 400g</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salsiccia al mirto 400g</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salsiccia di nostra produzione al kg</div>
+      <div class="card-price">22,00 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salsiccia di puro suino 400g</div>
+      <div class="card-price">9,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salsiccia finocchietto 400g</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="salumi">
+    <div class="card-img-placeholder">🌭</div>
+    <div class="card-body">
+      <div class="card-name">Salsiccia suino-cinghiale 400g</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <!-- FORMAGGI -->
+  <div class="card" data-cat="formaggi">
+    <div class="card-img-placeholder">🧀</div>
+    <div class="card-body">
+      <div class="card-name">Caciotta di pecora 700g</div>
+      <div class="card-price">14,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="formaggi">
+    <div class="card-img-placeholder">🧀</div>
+    <div class="card-body">
+      <div class="card-name">Casizolu 400g</div>
+      <div class="card-price">8,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="formaggi">
+    <div class="card-img-placeholder">🧀</div>
+    <div class="card-body">
+      <div class="card-name">Degustazione di Formaggi Sardi</div>
+      <div class="card-price">42,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="formaggi">
+    <div class="card-img-placeholder">🧀</div>
+    <div class="card-body">
+      <div class="card-name">Pecorino riserva nera al kg</div>
+      <div class="card-price">36,00 €</div>
+    </div>
+  </div>
+
+  <!-- PANE & DOLCI -->
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🍞</div>
+    <div class="card-body">
+      <div class="card-name">Cannoli siciliani al kg</div>
+      <div class="card-price">16,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🍪</div>
+    <div class="card-body">
+      <div class="card-name">Papassini conf. da 6</div>
+      <div class="card-price">6,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🍮</div>
+    <div class="card-body">
+      <div class="card-name">Pardulas conf da 6</div>
+      <div class="card-price">6,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🍩</div>
+    <div class="card-body">
+      <div class="card-name">Seadas conf da 4 pezzi</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🫓</div>
+    <div class="card-body">
+      <div class="card-name">Pane Gattiau Nero</div>
+      <div class="card-price">5,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🫓</div>
+    <div class="card-body">
+      <div class="card-name">Pane Guttiau alla cipolla</div>
+      <div class="card-price">5,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🫓</div>
+    <div class="card-body">
+      <div class="card-name">Pane Guttiau al rosmarino</div>
+      <div class="card-price">5,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🫓</div>
+    <div class="card-body">
+      <div class="card-name">Pane Guttiau peperoncino</div>
+      <div class="card-price">5,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pane">
+    <div class="card-img-placeholder">🥟</div>
+    <div class="card-body">
+      <div class="card-name">Ravioli Sardi 250g</div>
+      <div class="card-price">7,00 €</div>
+    </div>
+  </div>
+
+  <!-- VINI & LIQUORI -->
+  <div class="card" data-cat="vini">
+    <div class="card-img-placeholder">🍷</div>
+    <div class="card-body">
+      <div class="card-name">Cannonau 750ml</div>
+      <div class="card-price">8,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="vini">
+    <div class="card-img-placeholder">🍷</div>
+    <div class="card-body">
+      <div class="card-name">Costera Cannonau di Sardegna DOC - Argiolas</div>
+      <div class="card-price">15,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="vini">
+    <div class="card-img-placeholder">🍾</div>
+    <div class="card-body">
+      <div class="card-name">LA CALA Vermentino di Sardegna DOC Selle e Mosca</div>
+      <div class="card-price">14,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="vini">
+    <div class="card-img-placeholder">🍶</div>
+    <div class="card-body">
+      <div class="card-name">Mirto Rosso 50 cl</div>
+      <div class="card-price">9,00 €</div>
+    </div>
+  </div>
+
+  <!-- PIATTI PRONTI / CONFEZIONI -->
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🎁</div>
+    <div class="card-body">
+      <div class="card-name">Notti d'Estate (confezione)</div>
+      <div class="card-price">45,00 €</div>
+      <div class="card-badge">🏷 promozione</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🌸</div>
+    <div class="card-body">
+      <div class="card-name">Fiore di zucca ripieno</div>
+      <div class="card-price">4,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🍕</div>
+    <div class="card-body">
+      <div class="card-name">Pizza teglia (quadrata o tonda)</div>
+      <div class="card-price">16,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🥖</div>
+    <div class="card-body">
+      <div class="card-name">Pizzette e panini ripieni</div>
+      <div class="card-price">4,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🥙</div>
+    <div class="card-body">
+      <div class="card-name">Piadine con carne di cavallo farcite al kg</div>
+      <div class="card-price">20,90 €</div>
+      <div class="card-badge">più varianti disponibili</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🥙</div>
+    <div class="card-body">
+      <div class="card-name">Panino porcadella</div>
+      <div class="card-price">10,00 €</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="piatti">
+    <div class="card-img-placeholder">🥟</div>
+    <div class="card-body">
+      <div class="card-name">Panzerotti con contorno di zucchine</div>
+      <div class="card-price">5,00 €</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- STICKY CTA -->
+<div class="cta-bar">
+  <p>Ordina online →</p>
+  <a href="https://zia-paperona.sumupstore.com/prodotti" target="_blank" class="btn-ordina">🛒 Vai al negozio</a>
+</div>
+
+<footer>
+  <p>© Zia Paperona · <a href="https://zia-paperona.sumupstore.com/prodotti" target="_blank">zia-paperona.sumupstore.com</a></p>
+</footer>
+
+<script>
+  // Filter logic
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
